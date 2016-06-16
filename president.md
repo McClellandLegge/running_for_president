@@ -26,7 +26,7 @@ and many, many more ludicrous and wonderful names have been submitted to and pro
 - Check out the map to find out who from your town is running for President...probably somebody.
 - As the data is from the FEC, it includes candidate financial information (where available). It dates from 30 April 2016, so is not particularly useful in comparing current fundraising totals, if you care about such things.
 - I tried to plot candidate addresses on the map, but obviously trying to locate "Shit, Fuck AL 11111" is probably not going to work (and sometimes Google's geocoder just fails), so some of the markers are in strange places or missing.
-- Since there are a _lot_ of candidates (1807), the map may be slow to load. If you wait for it, it should be fine once it's loaded.
+- Since there are a _lot_ of candidates (1807), the map may be slow to load. If you're unlucky, shinyapps.io will shut down your instance. A more lightweight version may be yet to come.
 - Data is courtesy of the FEC.
 - Source code is available on [my Github](https://github.com/alistaire47/running_for_president). This website was built using [R](https://cran.r-project.org/), [Shiny](http://shiny.rstudio.com/), [Leaflet](http://leafletjs.com/), and [Datatables](https://datatables.net/).
 

@@ -1,4 +1,3 @@
-
 library(shiny)
 library(ggmap)
 library(dplyr)
@@ -33,7 +32,7 @@ metadata <- url %>% read_html() %>%
 ui <- shinyUI(
     navbarPage(
         '2016 US Presidential Candidates',
-        theme = 'http://bootswatch.com/flatly/bootstrap.min.css',
+        theme = 'bootstrap.min.css',
         
         tabPanel(
             'Home', 
@@ -73,7 +72,7 @@ server <- shinyServer(function(input, output) {
    output$map <- renderLeaflet({
        leaflet(candidates_for_map) %>% 
            setView(-95.71289, 37.09024, zoom = 4) %>%
-           addProviderTiles('CartoDB.PositronNoLabels') %>% 
+           addProviderTiles('CartoDB.Positron') %>% 
            addMarkers(
                popup = paste(
                    '<table><tr><th>Candidate:</th><th>', candidates_for_map$can_nam, '</th></tr>',
