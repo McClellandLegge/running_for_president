@@ -2,8 +2,8 @@ name: running_for_president
 account: alistaire
 server: shinyapps.io
 appId: 108880
-bundleId: 481639
+bundleId: 482079
 url: https://alistaire.shinyapps.io/running_for_president/
-when: 1466052577.72966
+when: 1466095135.6584
 asMultiple: FALSE
 asStatic: FALSE

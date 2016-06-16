@@ -19,7 +19,16 @@ library(rvest)
 # write.csv(candidates, 'candidates.csv', row.names = FALSE)
 candidates <- read.csv('candidates.csv')
 
-candidates_for_map <- candidates %>% filter(!is.na(lat))
+# build HTML for leaflet marker popups and pare unnecessary columns
+candidates_for_map <- candidates %>% filter(!is.na(lat)) %>% 
+    mutate(popup = paste(
+        '<table><tr><th>Candidate:</th><th>', can_nam, '</th></tr>',
+        '<tr><td>Address:</td><td>', 
+        can_str1, can_str2, '<br />',
+        can_cit, can_sta, can_zip, '</td></tr>',
+        '<tr><td>Net Contributions:</td><td>', net_con,
+        '</td></tr></table>'
+    )) %>% select(lat, lng = lon, popup)
 
 ## Grab column names from FEC
 url <- 'http://fec.gov/finance/disclosure/metadata/metadataforcandidatesummary.shtml'
@@ -41,8 +50,6 @@ ui <- shinyUI(
             )
         ),
         
-        tabPanel('A Map', leafletOutput('map', height = '650px')),
-        
         tabPanel(
             'The Data',
             verticalLayout(
@@ -62,7 +69,9 @@ ui <- shinyUI(
                 dataTableOutput('dt')
                 
             )
-        )
+        ),
+        
+        tabPanel('A Map', leafletOutput('map', height = '650px'))
         
     ))
 
@@ -74,14 +83,10 @@ server <- shinyServer(function(input, output) {
            setView(-95.71289, 37.09024, zoom = 4) %>%
            addProviderTiles('CartoDB.Positron') %>% 
            addMarkers(
-               popup = paste(
-                   '<table><tr><th>Candidate:</th><th>', candidates_for_map$can_nam, '</th></tr>',
-                   '<tr><td>Address:</td><td>', 
-                   candidates_for_map$can_str1, candidates_for_map$can_str2, '<br />',
-                   candidates_for_map$can_cit, candidates_for_map$can_sta, candidates_for_map$can_zip, '</td></tr>',
-                   '<tr><td>Net Contributions:</td><td>', candidates_for_map$net_con,
-                   '</td></tr></table>'
-                   )
+               lat = ~lat, 
+               lng = ~lng,
+               popup = ~popup, 
+               clusterOptions = markerClusterOptions()
                )
    })
    
